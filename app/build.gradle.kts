@@ -1,7 +1,7 @@
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
+    id("com.android.library")
+    id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.plugin.compose")
     `maven-publish`
 }
 
@@ -12,8 +12,6 @@ android {
     defaultConfig {
         minSdk = 24
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -36,6 +34,25 @@ android {
     }
     buildFeatures {
         compose = true
+    }
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("release") {
+                from(components["release"])
+                groupId = "com.learn"
+                artifactId = "smartbot"
+                version = "1.0.0"
+            }
+        }
+        repositories {
+            maven {
+                name = "local"
+                url = uri("${rootProject.projectDir}/local-maven")
+            }
+        }
     }
 }
 
@@ -67,56 +84,4 @@ dependencies {
     implementation(libs.retrofit.gson)
     implementation(libs.coil.compose)
     implementation(libs.timber)
-
-    implementation("com.learn.smartbot:smartbot:1.0.0")
-}
-
-afterEvaluate {
-    publishing {
-        publications {
-            create<MavenPublication>("release") {
-                from(components["release"])
-                
-                groupId = "com.learn.smartbot"
-                artifactId = "smartbot"
-                version = "1.0.0"
-
-                pom {
-                    name.set("SmartBot")
-                    description.set("Your library description")
-                    url.set("https://github.com/YOUR_USERNAME/YOUR_REPO")
-                    
-                    licenses {
-                        license {
-                            name.set("The Apache License, Version 2.0")
-                            url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
-                        }
-                    }
-                    
-                    developers {
-                        developer {
-                            id.set("your-github-username")
-                            name.set("Your Name")
-                            email.set("your.email@example.com")
-                        }
-                    }
-                }
-            }
-        }
-        
-        repositories {
-            maven {
-                name = "OSSRH"
-                url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-                credentials {
-                    username = System.getenv("OSSRH_USERNAME")
-                    password = System.getenv("OSSRH_PASSWORD")
-                }
-            }
-        }
-    }
-
-    signing {
-        sign(publishing.publications["release"])
-    }
 }

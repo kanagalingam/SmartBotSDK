@@ -4,7 +4,7 @@ import com.learn.smartbot.internal.util.AppConstants.EMPTY_STRING
 import com.learn.smartbot.internal.util.DeliveryStatus
 
 data class ChatMessage(
-    val senderId : String = EMPTY_STRING,
+    val senderId : Long? = null,
     val isSender: Boolean = false,
     val userName: String = EMPTY_STRING,
     val timeStamp: String = EMPTY_STRING,

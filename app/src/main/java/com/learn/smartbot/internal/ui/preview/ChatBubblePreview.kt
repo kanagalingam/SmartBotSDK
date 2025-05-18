@@ -5,7 +5,4 @@ import com.learn.smartbot.internal.ui.organism.ChatScreen
 
 @Composable
 fun ChatBubblePreview() {
-    ChatScreen(
-
-    )
 }
