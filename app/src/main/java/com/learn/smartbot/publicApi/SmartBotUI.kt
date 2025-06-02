@@ -12,8 +12,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.learn.smartbot.internal.model.ChatMessage
+import com.learn.smartbot.internal.ui.atom.VerticalSpace16
 import com.learn.smartbot.internal.ui.molecule.MoleculeChatBubble
 import com.learn.smartbot.internal.ui.molecule.MoleculeChatInputBar
+import com.learn.smartbot.internal.util.AppConstants.EMPTY_STRING
 import com.learn.smartbot.internal.util.DeliveryStatus
 
 @Composable
@@ -22,7 +24,7 @@ fun SmartBotUI(
     theme: ChatTheme = ChatTheme(),
     messages: List<ChatMessage>,
     onSendMessage: (String) -> Unit,
-    isReverseLayout: Boolean = true
+    isReverseLayout: Boolean = false
 ) {
     var inputText by remember { mutableStateOf("") }
 
@@ -34,11 +36,17 @@ fun SmartBotUI(
             reverseLayout = isReverseLayout
         ) {
             items(messages) { message ->
-                MoleculeChatBubble(
-                    isSender = message.isSender,
-                    message = message.message,
-                    deliveryStatus = DeliveryStatus.Delivered()
-                )
+                Column {
+                    MoleculeChatBubble(
+                        isUserSentMessage = message.isUserSentMessage,
+                        message = message.message,
+                        deliveryStatus = DeliveryStatus.Delivered(),
+                        userProfileIconUrl = message.userProfileIconUrl,
+                        timeStamp = message.timeStamp,
+                        userName = message.userName ?: EMPTY_STRING,
+                    )
+                    VerticalSpace16()
+                }
             }
         }
 

@@ -8,7 +8,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.learn.smartbot.internal.model.ChatMessage
 import com.learn.smartbot.internal.ui.molecule.MoleculeChatInputBar
-import com.learn.smartbot.internal.ui.atom.AtomMessageBubbleShape
 import com.learn.smartbot.internal.ui.molecule.MoleculeChatBubble
 import com.learn.smartbot.internal.util.DeliveryStatus
 
@@ -32,10 +31,14 @@ fun ChatScreen(
                 .fillMaxWidth(),
             reverseLayout = isReverseLayout
         ) {
-            items(messages.reversed()) { message ->
+            items(messages) { message ->
                 MoleculeChatBubble(
-                    isSender = false,
-                    deliveryStatus = DeliveryStatus.Delivered()
+                    isUserSentMessage = message.isUserSentMessage,
+                    deliveryStatus = DeliveryStatus.Delivered(),
+                    userName = message.userName,
+                    userProfileIconUrl = message.userProfileIconUrl,
+                    timeStamp =message.timeStamp,
+                    message = message.message
                 )
             }
         }

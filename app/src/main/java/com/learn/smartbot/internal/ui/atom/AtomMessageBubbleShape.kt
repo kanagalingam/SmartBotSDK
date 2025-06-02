@@ -11,13 +11,13 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun AtomMessageBubbleShape(
-    isSender: Boolean
+    isUserSentMessage: Boolean
 ) {
     Box(
         modifier = Modifier
             .padding(8.dp)
             .background(
-                color = if (isSender) Color(0xFFDCF8C6) else Color.Green,
+                color = if (isUserSentMessage) Color(0xFFDCF8C6) else Color.Green,
             )
             .padding(16.dp)
     )

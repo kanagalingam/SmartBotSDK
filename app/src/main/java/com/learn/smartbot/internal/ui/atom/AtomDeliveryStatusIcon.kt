@@ -15,7 +15,7 @@ fun AtomDeliveryStatusIcon(
     imageUrl: String? = null,
     status: DeliveryStatus = DeliveryStatus.Delivered(),
     contentDescription: String? = null,
-    size: Dp = 48.dp,
+    size: Dp = 20.dp,
     alignment: Alignment = Alignment.Center,
 ) {
     val context = LocalContext.current
